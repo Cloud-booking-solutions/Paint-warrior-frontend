@@ -1,0 +1,68 @@
+/* BlogManager.css */
+
+.blog-manager {
+    background-color: #0f172a;
+    min-height: 100vh;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.blog-manager h1 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #facc15;
+    margin-bottom: 20px;
+}
+
+/* Blog List Container */
+.blog-list {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Individual Blog Item */
+.blog-item {
+    background-color: #1e293b;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    border: 1px solid #374151;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Title Box */
+.blog-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #facc15;
+    padding: 15px;
+    background-color: #27334a;
+    border-radius: 8px;
+    border: 1px solid #374151;
+}
+
+/* Content Box */
+.blog-content {
+    font-size: 18px;
+    color: white;
+    padding: 15px;
+    background-color: #334155;
+    border-radius: 8px;
+    border: 1px solid #374151;
+}
+
+/* Buttons below the content */
+.blog-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}

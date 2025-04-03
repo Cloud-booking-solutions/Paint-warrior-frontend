@@ -28,7 +28,7 @@ const Navbar = () => {
 
     {/* Desktop Menu */}
     <ul className="hidden md:flex space-x-5 uppercase"> {/* Reduced space-x-6 to space-x-5 */}
-      {["Home", "About", "Services", "Gallery", "Blog", "Contact Us"].map((item) => {
+      {["Home", "About", "Services", "Gallery", "Blog", "Contact Us", "Admin"].map((item) => {
         const path = `/${item.toLowerCase().replace(/\s+/g, "-") === "home" ? "" : item.toLowerCase().replace(/\s+/g, "-")}`;
         return (
           <li key={item}>
@@ -51,7 +51,7 @@ const Navbar = () => {
   {/* Mobile Menu */}
   {isOpen && (
     <ul className="md:hidden flex flex-col items-center text-gray-800 space-y-4 p-4 bg-white">
-      {["Home", "About", "Services", "Gallery", "Blog", "Contact Us"].map((item) => {
+      {["Home", "About", "Services", "Gallery", "Blog", "Contact Us", "Admin"].map((item) => {
         const path = `/${item.toLowerCase().replace(/\s+/g, "-") === "home" ? "" : item.toLowerCase().replace(/\s+/g, "-")}`;
         return (
           <li key={item}>

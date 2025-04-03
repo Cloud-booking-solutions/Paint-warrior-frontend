@@ -8,6 +8,7 @@ import Gallery from "./pages/Gallary";
 import Contact from "./pages/Contact";
 import CallWhatsAppButton from "./component/CallWhatsappButton";
 import Blog from "./pages/Blog";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -21,8 +22,9 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/gallery" element={<Gallery />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/contact-us" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />;
+        <Route path="/admin" element={<Admin />} />;
 
         {/* Redirect any unknown route to Home */}
         <Route path="*" element={<Navigate to="/" />} />
