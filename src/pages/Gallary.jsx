@@ -4,7 +4,7 @@ import axios from "axios";
 const ImageGallery = () => {
   const [media, setMedia] = useState([]);
   const [selectedMedia, setSelectedMedia] = useState(null);
-  const [mediaType, setMediaType] = useState("image"); // Default: Show images
+  const [mediaType, setMediaType] = useState("image");
 
   const fetchMedia = () => {
     axios
@@ -31,56 +31,61 @@ const ImageGallery = () => {
   };
 
   return (
-    <div className="p-5 mt-20">
-      <h2 className="text-2xl font-bold mb-4 text-center pt-[5px]">Gallery</h2>
+    <div className="p-5 mt-20 max-w-7xl mx-auto">
+      <h2 className="text-2xl font-bold mb-4 text-center">Gallery</h2>
 
-      {/* Buttons to switch between Images and Videos */}
-      <div className="flex justify-center gap-4 mb-4">
+      {/* Filter Buttons */}
+      <div className="flex justify-center gap-4 mb-6">
         <button
-          className={`px-4 py-2 rounded ${mediaType === "image" ? "bg-yellow-500 text-white" : "bg-gray-300"}`}
+          className={`px-4 py-2 rounded ${
+            mediaType === "image"
+              ? "bg-yellow-500 text-white"
+              : "bg-gray-300 text-black"
+          }`}
           onClick={() => setMediaType("image")}
         >
           Images
         </button>
         <button
-          className={`px-4 py-2 rounded ${mediaType === "video" ? "bg-yellow-500 text-white" : "bg-gray-300"}`}
+          className={`px-4 py-2 rounded ${
+            mediaType === "video"
+              ? "bg-yellow-500 text-white"
+              : "bg-gray-300 text-black"
+          }`}
           onClick={() => setMediaType("video")}
         >
           Videos
         </button>
       </div>
 
+      {/* Media Grid */}
       {media.length === 0 ? (
-        <p>No media found</p>
+        <p className="text-center">No media found</p>
       ) : (
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {media
             .filter((item) =>
               mediaType === "image"
-                ? !item.filename.endsWith(".mp4") &&
-                  !item.filename.endsWith(".mov") &&
-                  !item.filename.endsWith(".avi")
-                : item.filename.endsWith(".mp4") ||
-                  item.filename.endsWith(".mov") ||
-                  item.filename.endsWith(".avi")
+                ? !/\.(mp4|mov|avi)$/i.test(item.filename)
+                : /\.(mp4|mov|avi)$/i.test(item.filename)
             )
             .map((item) => (
               <div
                 key={item._id}
-                className="border-2 border-yellow-500 rounded-lg overflow-hidden cursor-pointer flex items-center justify-center"
+                className="border-2 border-yellow-500 rounded-lg overflow-hidden cursor-pointer"
                 onClick={() => handleMediaClick(item)}
               >
                 {mediaType === "video" ? (
                   <video
                     src={`https://paint-warrior-backend.onrender.com/${item.path}`}
-                    className="w-[500px] h-[300px] p-2"
+                    className="w-full h-48 object-cover"
                     controls
                   />
                 ) : (
                   <img
                     src={`https://paint-warrior-backend.onrender.com/${item.path}`}
                     alt={item.filename || "Uploaded Image"}
-                    className="w-[350px] h-[250px] p-2"
+                    className="w-full h-48 object-cover"
                     loading="lazy"
                   />
                 )}
@@ -89,30 +94,27 @@ const ImageGallery = () => {
         </div>
       )}
 
+      {/* Modal */}
       {selectedMedia && (
         <div
-          className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 z-50"
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50 px-4"
           onClick={closeModal}
         >
-          {/* Close Button Positioned Above */}
-          <button
-            className="mb-4 px-4 py-2 bg-red-500 text-white rounded"
-            onClick={closeModal}
-          >
-            Close
-          </button>
-
-          {/* Media Container */}
           <div
-            className="bg-white p-4 rounded shadow-lg"
+            className="relative bg-white w-full max-w-3xl max-h-[90vh] p-4 rounded shadow-xl overflow-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            {selectedMedia.filename.endsWith(".mp4") ||
-            selectedMedia.filename.endsWith(".mov") ||
-            selectedMedia.filename.endsWith(".avi") ? (
+            <button
+              className="absolute top-2 right-2 text-2xl font-bold text-gray-800 hover:text-red-600"
+              onClick={closeModal}
+            >
+              &times;
+            </button>
+
+            {/\.(mp4|mov|avi)$/i.test(selectedMedia.filename) ? (
               <video
                 src={`https://paint-warrior-backend.onrender.com/${selectedMedia.path}`}
-                className="w-[500px] h-[400px]"
+                className="w-full max-h-[75vh] object-contain"
                 controls
                 autoPlay
               />
@@ -120,7 +122,7 @@ const ImageGallery = () => {
               <img
                 src={`https://paint-warrior-backend.onrender.com/${selectedMedia.path}`}
                 alt={selectedMedia.filename || "Selected Media"}
-                className="w-[600px] h-[350px]"
+                className="w-full max-h-[75vh] object-contain"
               />
             )}
           </div>
