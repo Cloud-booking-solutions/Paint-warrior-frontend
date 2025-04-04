@@ -121,7 +121,7 @@ const HomeSlider = () => {
             <img
               src={slide.image}
               alt={slide.title}
-              style={{ filter: 'blur(4px)' }}
+              style={{ filter: 'blur(3px)' }}
               className="w-full h-full object-cover filter"
             />
             <div className="absolute inset-0  bg-opacity-50 w-full md:h-[400px] lg:h-[480px]"></div>
