@@ -4,7 +4,7 @@ import ImageManager from "../pages/ImageManager";
 import BlogManager from "../pages/BlogManager";
 
 export default function Admin() {
-  const ADMIN_CREDENTIALS = { username: "admin", password: "admin" };
+  const ADMIN_CREDENTIALS = { username: "admin", password: "Subhash@100" };
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [view, setView] = useState("dashboard");
   const [username, setUsername] = useState("");
