@@ -9,7 +9,6 @@ const ImageGallery = () => {
     axios
       .get("https://paint-warrior-backend.onrender.com/api/media")
       .then((response) => {
-        console.log("✅ Media from API:", response.data);
         setMedia(response.data);
       })
       .catch((error) => {
@@ -30,36 +29,33 @@ const ImageGallery = () => {
   };
 
   return (
-    <div className="p-5 mt-20">
-      <h2 className="text-2xl font-bold mb-4 text-center pt-[5px]">Gallery</h2>
+    <div className="p-4 mt-20 max-w-7xl mx-auto">
+      <h2 className="text-2xl font-bold mb-6 text-center">Gallery</h2>
 
       {media.length === 0 ? (
         <p className="text-center text-gray-600">No media found</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {media.map((item) => {
-            const isVideo =
-              item.filename.endsWith(".mp4") ||
-              item.filename.endsWith(".mov") ||
-              item.filename.endsWith(".avi");
+            const isVideo = /\.(mp4|mov|avi)$/i.test(item.filename);
 
             return (
               <div
                 key={item._id}
-                className="border-2 border-yellow-500 rounded-lg overflow-hidden cursor-pointer"
+                className="border-2 border-yellow-500 rounded-lg overflow-hidden cursor-pointer transition-transform hover:scale-105"
                 onClick={() => handleMediaClick(item)}
               >
                 {isVideo ? (
                   <video
                     src={`https://paint-warrior-backend.onrender.com/uploads/${item.filename}`}
-                    className="w-full h-48 object-cover p-2"
+                    className="w-full h-48 object-cover"
                     controls
                   />
                 ) : (
                   <img
                     src={`https://paint-warrior-backend.onrender.com/uploads/${item.filename}`}
-                    alt={item.filename || "Uploaded Image"}
-                    className="w-full h-48 object-cover p-2"
+                    alt="Uploaded"
+                    className="w-full h-48 object-cover"
                     loading="lazy"
                   />
                 )}
@@ -72,34 +68,32 @@ const ImageGallery = () => {
       {/* Modal */}
       {selectedMedia && (
         <div
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50"
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50 px-4"
           onClick={closeModal}
         >
           <div
-            className="bg-white max-w-full max-h-full p-4 rounded shadow-lg overflow-auto"
+            className="relative bg-white w-full max-w-3xl max-h-[90vh] p-4 rounded shadow-xl overflow-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="absolute top-4 right-4 text-black text-2xl font-bold"
+              className="absolute top-2 right-2 text-2xl font-bold text-gray-800 hover:text-red-600"
               onClick={closeModal}
             >
               &times;
             </button>
 
-            {selectedMedia.filename.endsWith(".mp4") ||
-            selectedMedia.filename.endsWith(".mov") ||
-            selectedMedia.filename.endsWith(".avi") ? (
+            {/\.(mp4|mov|avi)$/i.test(selectedMedia.filename) ? (
               <video
                 src={`https://paint-warrior-backend.onrender.com/uploads/${selectedMedia.filename}`}
-                className="w-full max-h-[80vh] rounded"
+                className="w-full max-h-[75vh] object-contain"
                 controls
                 autoPlay
               />
             ) : (
               <img
                 src={`https://paint-warrior-backend.onrender.com/uploads/${selectedMedia.filename}`}
-                alt={selectedMedia.filename || "Selected Media"}
-                className="w-full max-h-[80vh] object-contain rounded"
+                alt="Selected"
+                className="w-full max-h-[75vh] object-contain"
               />
             )}
           </div>
